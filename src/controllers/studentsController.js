@@ -22,8 +22,36 @@ exports.getStudentById = (req, res) => {
 
 
 exports.createStudent = (req, res) => {
-    const newStudent = req.body;
     newStudent.id = students[students.length - 1].id + 1;
+    const newStudent = req.body;
     students.push(newStudent);
     res.status(201).json({ message : "Student added Successfully"});
+};
+
+exports.updateStudent = (req, res) => {
+    const studentFound = students.find((student) => {
+        return student.id === Number(req.params.id);
+    });
+    if (studentFound) {
+        studentFound.name = req.body.name;
+        studentFound.age = req.body.age;
+        studentFound.grade = req.body.grade;
+        res.status(200).json({ message : "Student updated"});
+    } else {
+        res.status(404).json({ message : "Student not found"});
+    } 
+};
+
+
+exports.deleteStudent = (req, res) => {
+    const studentFound = students.find((student) => {
+        return student.id === Number(req.params.id);
+    });
+    if (studentFound) {
+        const studentIndex = students.indexOf(studentFound);
+        students.splice(studentIndex, 1);
+        res.status(200).json({ message : "Student deleted"});
+    } else {
+        res.status(404).json({ message : "Student not found"});
+    } 
 };
