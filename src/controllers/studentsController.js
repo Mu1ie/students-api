@@ -22,8 +22,8 @@ exports.getStudentById = (req, res) => {
 
 
 exports.createStudent = (req, res) => {
-    newStudent.id = students[students.length - 1].id + 1;
     const newStudent = req.body;
+    newStudent.id = students[students.length - 1].id + 1;
     students.push(newStudent);
     res.status(201).json({ message : "Student added Successfully"});
 };
